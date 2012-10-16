@@ -1,4 +1,4 @@
-Display which environment you are on **at all times** in the CP so you don't accidentally do something on the production environment. In your config.php, set an ENV variable like so:
+Display which environment you are on **at all times** in the CP so you don't accidentally do something bad on the production environment. In your config.php, set an ENV variable like so:
 
 <pre>if(!defined('ENV')) {
 	switch ($_SERVER['SERVER_NAME']) {
