@@ -20,16 +20,16 @@
  * @package		ExpressionEngine
  * @subpackage	Addons
  * @category	Accessory
- * @author		Trevor Davis
- * @link		http://trevordavis.net
+ * @author		Jason Siffring
+ * @link		http://surprisehighway.com
  */
  
-class Environment_acc {
+class Sh_environment_acc {
 	
-	public $name			= 'Environment';
-	public $id				= 'environment';
+	public $name			= 'SH Environment';
+	public $id				= 'sh_environment';
 	public $version			= '1.0';
-	public $description		= 'Display which environment you are on at all times in the CP.';
+	public $description		= 'Display which environment you are on at all times in the CP. Fork from https://github.com/davist11/Environment-EE-Addon';
 	public $sections		= array();
 	
 	/**
@@ -40,13 +40,13 @@ class Environment_acc {
 		$EE =& get_instance();
 		$js = '';
 		
-		if ($EE->session->userdata('group_id') == 1 && defined('ENV')) {
+		if ($EE->session->userdata('group_id') == 1 && defined('NSM_ENV')) {
 			$js = 'var $body = $("body");
 				var $siteName = $("#navigationTabs").find(".msm_sites");
 				var siteNameOffset = $siteName.offset();
 				var rightPos = $body.width() - siteNameOffset.left + 20;
 				
-				$body.append("<div class=\"environment-label\" style=\"right: " + rightPos + "px;\">' . ENV . '</div>");';
+				$body.append("<div class=\"environment-label\" style=\"right: " + rightPos + "px;\">' . NSM_ENV . ' <small>environment</small></div>");';
 			
 			$css = '<style type="text/css" media="screen">
 						.environment-label {
@@ -57,13 +57,19 @@ class Environment_acc {
 							-moz-border-radius-bottomright: 3px;
 							-webkit-border-bottom-right-radius: 3px;
 							border-bottom-right-radius: 3px;
-							color: #fff;
+							color: #8F9A9C;
 							font-size: 150%;
-							padding: 20px 20px 10px;
+							padding: 12px 20px 6px;
 							position: fixed;
 							text-transform: uppercase;
+							text-align: center;
 							top: 0;
 							z-index: 100;
+						}
+						.environment-label small {
+							display: block;
+							font-size: 10px;
+							text-transform: uppercase;
 						}
 					</style>';
 			
