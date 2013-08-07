@@ -25,13 +25,13 @@
  */
  
 class Sh_environment_acc {
-	
+
 	public $name			= 'SH Environment';
 	public $id				= 'sh_environment';
-	public $version			= '1.0';
+	public $version			= '1.1';
 	public $description		= 'Display which environment you are on at all times in the CP. Fork from https://github.com/davist11/Environment-EE-Addon';
 	public $sections		= array();
-	
+
 	/**
 	 * Set Sections
 	 */
@@ -39,15 +39,22 @@ class Sh_environment_acc {
 	{
 		$EE =& get_instance();
 		$js = '';
-		
-		if ($EE->session->userdata('group_id') == 1 && defined('NSM_ENV')) {
+
+		// FocusLab Master Config uses the ENV constant
+		// If that's not set check for NSM Bootstrap NSM_ENV
+		if( !defined('ENV') && defined('NSM_ENV'))
+		{
+			define('ENV', NSM_ENV);
+		}
+
+		if ($EE->session->userdata('group_id') == 1 && defined('ENV')) {
 			$js = 'var $body = $("body");
 				var $siteName = $("#navigationTabs").find(".msm_sites");
 				var siteNameOffset = $siteName.offset();
 				var rightPos = $body.width() - siteNameOffset.left + 20;
 				
-				$body.append("<div class=\"environment-label\" style=\"right: " + rightPos + "px;\">' . NSM_ENV . ' <small>environment</small></div>");';
-			
+				$body.append("<div class=\"environment-label\" style=\"right: " + rightPos + "px;\">' . ENV . ' <small>environment</small></div>");';
+
 			$css = '<style type="text/css" media="screen">
 						.environment-label {
 							background: #1f2b33;
@@ -72,16 +79,16 @@ class Sh_environment_acc {
 							text-transform: uppercase;
 						}
 					</style>';
-			
+
 			$EE->cp->add_to_head($css);
 		}
-		
+
 		$this->sections[] = '<script type="text/javascript">$("#accessoryTabs a.' . $this->id . '").parent().remove();' . $js . '</script>';
-		
+
 	}
-	
+
 	// ----------------------------------------------------------------
-	
+
 }
  
 /* End of file acc.environment.php */
